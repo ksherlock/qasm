@@ -257,15 +257,15 @@ macop         sep   $30
               plx
               cmp   #' '+1
               blt   :slab
-              cpx   #$0f
+              cpx   #lab_size
               bge   :siny
               sta   labstr+1,x
 :siny         iny
               inx
               jmp   ]l
-:slab         cpx   #$10
+:slab         cpx   #lab_size+1
               blt   :slab1
-              ldx   #$0f
+              ldx   #lab_size
 :slab1        stx   labstr
               lda   #$ff
               sta   linelable
@@ -384,7 +384,7 @@ pmcop         php
               dey
               ldx   #$00
 ]lup          lda   [lineptr],y
-              cpx   #15
+              cpx   #lab_size
               bge   :c1
               sta   labstr+1,x
 :c1           cmp   #' '+1
@@ -395,14 +395,14 @@ pmcop         php
               beq   :ok1
               inx
               iny
-              cpx   #$10
+              cpx   #lab_size+1
               blt   ]lup
               bra   :ok
 :ok1          iny
 :ok           txa
-              cmp   #$10
+              cmp   #lab_size+1
               blt   :ls
-              lda   #$0f
+              lda   #lab_size
 :ls           sta   labstr
               sty   :y
               sep   $30
@@ -904,7 +904,7 @@ expandmac     php
               blt   :cpx
               cmp   #'>'+1
               blt   :errbl1                ;"<=>" not allowed either..
-:cpx          cpx   #$0f
+:cpx          cpx   #lab_size
               bge   :gliny
               sta   labstr+1,x
               inx
@@ -917,9 +917,9 @@ expandmac     php
 :fjmp         jmp   :flushiny
 :sjmp         jmp   :savlen
 
-:glabdone     cpx   #$10
+:glabdone     cpx   #lab_size+1
               blt   :gl2
-              ldx   #$0f
+              ldx   #lab_size
 :gl2          stx   labstr
               cmp   #' '
               bge   :getopcode
@@ -1593,7 +1593,7 @@ macinsert
               stz   ]len2+1
               ldx   #$02                   ;start at byte 2
               txy
-]lup1         cpx   #$10
+]lup1         cpx   #lab_size+1
               jeq   :error2
               cpx   ]len1
               blt   :1
@@ -1833,7 +1833,7 @@ macfind
               sep   $20
               ldx   #$02                   ;start at byte 2
               txy
-]lup1         cpx   #$10
+]lup1         cpx   #lab_size+1
               bge   :movefound
               cpx   ]len1
               blt   :1

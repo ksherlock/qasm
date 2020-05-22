@@ -1323,16 +1323,16 @@ getnum        php
 * lda evallevel           ;don't need to do this here
 * bne :lxit               ;unless level>256
               lda   #'}'
-:iny          cpx   #$0f
+:iny          cpx   #lab_size
               bge   :iny1
               sta   labstr+1,x
 :iny1         iny
               inx
               jmp   ]lup
 :lxit         txa
-              cmp   #$0f+1
+              cmp   #lab_size+1
               blt   :lx
-              lda   #$0f
+              lda   #lab_size
 :lx           sta   labstr
               sty   :next
               jsr   findlabval

@@ -1129,7 +1129,7 @@ equate        php
               tyx
               sta       labstr,x
               iny
-              cpy       #16
+              cpy       #lab_size+1
               blt       ]lup
               plp
               jmp       insertlable
@@ -1146,7 +1146,7 @@ equate        php
               tyx
               sta       labstr,x
               iny
-              cpy       #16
+              cpy       #lab_size+1
               blt       ]lup
               jsr       findlable
               bcs       :macp21
@@ -1458,16 +1458,16 @@ extop
               beq       :insert
               cmp       #';'
               beq       :insert
-              cpx       #15
+              cpx       #lab_size
               bge       :iny
               sta       labstr+1,x
 :iny          iny
               inx
               jmp       ]lup
 :insert       txa
-              cmp       #$10
+              cmp       #lab_size+1
               blt       :ls
-              lda       #$0f
+              lda       #lab_size
 :ls           sta       labstr
               rep       $30
               sty       :ypos
@@ -1607,16 +1607,16 @@ exdop
               beq       :insert
               cmp       #';'
               beq       :insert
-              cpx       #15
+              cpx       #lab_size
               bge       :iny
               sta       labstr+1,x
 :iny          iny
               inx
               jmp       ]lup
 :insert       txa
-              cmp       #$10
+              cmp       #lab_size+1
               blt       :ls
-              lda       #$0f
+              lda       #lab_size
 :ls           sta       labstr
               rep       $30
               sty       :ypos
@@ -1794,16 +1794,16 @@ entop
               beq       :insert
               cmp       #';'
               beq       :insert
-              cpx       #15
+              cpx       #lab_size
               bge       :iny
               sta       labstr+1,x
 :iny          iny
               inx
               jmp       ]lup
 :insert       txa
-              cmp       #$10
+              cmp       #lab_size+1
               blt       :ls
-              lda       #$0f
+              lda       #lab_size
 :ls           sta       labstr
               rep       $30
               sty       :ypos

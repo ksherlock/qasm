@@ -201,7 +201,7 @@ asm          php
              plx
              cmp   #' '+1
              blt   :glabdone
-:cpx         cpx   #$0f
+:cpx         cpx   #lab_size
              bge   :gliny
              sta   labstr+1,x
              inx
@@ -210,9 +210,9 @@ asm          php
 :sjmp        jmp   :savlen
 :cjmp        jmp   :comment
 
-:glabdone    cpx   #$10
+:glabdone    cpx   #lab_size+1
              blt   :gl2
-             ldx   #$0f
+             ldx   #lab_size
 :gl2         stx   labstr
              cmp   #' '
              blt   :sjmp
@@ -1858,9 +1858,9 @@ domacros     php                                       ;enter with $00 in A to s
              cmp   #$00
              bne   :nofind
              ldx   opcode
-             cpx   #$10
+             cpx   #lab_size+1
              blt   :move
-             ldx   #$0f
+             ldx   #lab_size
 :move        lda   opcode,x
              sta   labstr,x
              dex
@@ -3411,7 +3411,7 @@ findlable
              sep   $20
              ldx   #$02                                ;start at byte 2
              txy
-]lup1        cpx   #$10
+]lup1        cpx   #lab_size+1
              bge   :movefound
              cpx   ]len1
              blt   :1
@@ -3599,7 +3599,7 @@ insertlable
              stz   ]len2+1
              ldx   #$02                                ;start at byte 2
              txy
-]lup1        cpx   #$10
+]lup1        cpx   #lab_size+1
              jeq   :error2
              cpx   ]len1
              blt   :1
@@ -3744,7 +3744,7 @@ insertlable
              sta   ]len2
              ldy   #$02
              tyx                                       ;start at byte 2
-]lup1        cpx   #$10
+]lup1        cpx   #lab_size+1
              jeq   :error2
              cpx   ]len1
              blt   :fi1
