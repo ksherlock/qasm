@@ -310,14 +310,14 @@ macop         sep   $30
               pea   #symfull
               jmp   :error
 
-:init         ldy   #26
+:init         ldy   #o_labtype
               lda   #$8004
               sta   [lableptr],y
-              ldy   #28
+              ldy   #o_labval
               lda   nextlableptr
               sta   [lableptr],y
               tax
-              ldy   #30
+              ldy   #o_labval+2
               lda   nextlableptr+2
               sta   [lableptr],y
               sta   lableptr+2
@@ -351,7 +351,7 @@ macop         sep   $30
               sta   [lableptr],y
               ldy   #6
               sta   [lableptr],y
-              ldy   #26
+              ldy   #o_labtype
               sta   [lableptr],y
               jsr   inclablect
               bcs   :err1
@@ -415,7 +415,7 @@ pmcop         php
 * bcc :builtin ;not found so try built in macs
               bcc   :sec
               rep   $30
-              ldy   #26
+              ldy   #o_labtype
               lda   [lableptr],y
               cmp   #absolutebit.macrobit
               bne   :notmac
@@ -581,7 +581,7 @@ initmac       php
               sta   macstack+6,x
               lda   lastlen
               sta   macstack+8,x
-              ldy   #16
+              ldy   #o_labnum 
               lda   [lableptr],y
               sta   macstack+10,x
 
@@ -590,10 +590,10 @@ initmac       php
               sta   flen
               sta   flen+2
 
-              ldy   #30
+              ldy   #o_labval+2
               lda   [lableptr],y
               sta   workspace+2
-              ldy   #28
+              ldy   #o_labval
               lda   [lableptr],y
               sta   workspace
               ldy   #2
@@ -1541,10 +1541,10 @@ macinsert
               iny
               lda   [lableptr1],y
               sta   lableptr+2
-              ldy   #28
+              ldy   #o_labval
               lda   [lableptr],y
               sta   ]ptr
-              ldy   #30
+              ldy   #o_labval+2
               lda   [lableptr],y
               sta   ]ptr+2
               ldy   #$04
@@ -1553,7 +1553,7 @@ macinsert
               ldy   #$06
 :py2          lda   []ptr],y
               sta   :count
-              ldy   #24
+              ldy   #o_lablocal
               lda   [lableptr],y
               jpl   :start
               lda   macstack+10,x
@@ -1562,7 +1562,7 @@ macinsert
               jmp   :error
 :ne3          sta   ]pos
               sta   labprev
-              ldy   #24
+              ldy   #o_lablocal
               lda   lablect
               sta   [lableptr],y           ;set local ptr for GLable
 :save         rep   $30
@@ -1616,7 +1616,7 @@ macinsert
               lda   ]len1
               cmp   ]len2
               bne   :goleft
-:replace      ldy   #22                    ;offset to equ value
+:replace      ldy   #o_labprev                    ;offset to equ value
               lda   [lableptr],y
 :rl           tay
               iny
@@ -1659,7 +1659,7 @@ macinsert
               sta   [macptr],y
               jmp   :nosave
 :goleft       rep   $30
-              ldy   #18                    ;leftptr
+              ldy   #o_lableft             ;leftptr
               lda   [lableptr],y
               bpl   :p1
               lda   lablect
@@ -1668,7 +1668,7 @@ macinsert
 :p1           sta   ]pos
               jmp   ]lup
 :goright      rep   $30
-              ldy   #20                    ;leftptr
+              ldy   #o_labright            ;rightptr
               lda   [lableptr],y
               bpl   :p2
               lda   lablect
@@ -1742,7 +1742,7 @@ macinsert
               clc
               adc   #labstr
               tax                          ;source low word
-              lda   #31                    ;MVN
+              lda   #sym_size-1            ;MVN
               phb
 :mvn          mvn   $000000,$000000
               plb
@@ -1798,14 +1798,14 @@ macfind
               iny
               lda   [lableptr1],y
               sta   lableptr+2
-              ldy   #24
+              ldy   #o_lablocal
               lda   [lableptr],y
               jmi   :nf1
               sta   ]pos
-              ldy   #28
+              ldy   #o_labval
               lda   [lableptr],y
               tax
-              ldy   #30
+              ldy   #o_labval+2
               lda   [lableptr],y
               sta   lableptr+2
               stx   lableptr
@@ -1858,13 +1858,13 @@ macfind
               cmp   ]len2
               beq   :movefound
 :goleft       rep   $30
-              ldy   #18
+              ldy   #o_lableft
               lda   [lableptr],y
               bmi   :nf1
               sta   ]pos
               jmp   ]lup
 :goright      rep   $30
-              ldy   #20
+              ldy   #o_labright
               lda   [lableptr],y
               bmi   :nf1
               sta   ]pos
@@ -1883,7 +1883,7 @@ macfind
               iny
               lda   [lableptr1],y
               sta   lableptr+2
-              ldy   #22
+              ldy   #o_labprev
               lda   [lableptr],y
 :lup          tay
               iny
@@ -1903,10 +1903,10 @@ macfind
               iny
               iny
               lda   [macptr],y
-              ldy   #30
+              ldy   #o_labval+2
               sta   [lableptr],y
               txa
-              ldy   #28
+              ldy   #o_labval
               sta   [lableptr],y
               plp
               sec
