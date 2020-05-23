@@ -14,6 +14,7 @@ doexpress    =     $01
              use   ../macros/builtin.macs
              use   ../macros/qatools.macs
              use   ../data/qa.equates
+             use   ../asm/sym.equates
 
              use   link.macs
 
