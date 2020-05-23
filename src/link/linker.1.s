@@ -415,15 +415,15 @@ linkline        php
                 cmp       #' '
                 blt       :done
                 beq       :lable
-                cpx       #15
+                cpx       #lab_size
                 bge       :nosta
                 sta       newlable+1,x
 :nosta          inx
                 jmp       ]lup
 :lable          txa
-                cmp       #15
+                cmp       #lab_size
                 blt       :l1
-                lda       #15
+                lda       #lab_size
 :l1             sta       newlable
                 jmp       :op
 
@@ -1008,9 +1008,9 @@ equop           bit       passnum
                 lda       newlable
                 and       #$ff
                 beq       :badlable
-                cmp       #15
+                cmp       #lab_size
                 blt       :tx1
-                lda       #15
+                lda       #lab_size
 :tx1            tax
                 sep       $20
                 sta       labstr
@@ -1048,9 +1048,9 @@ equ1op          bit       passnum
                 lda       newlable
                 and       #$ff
                 beq       :badlable
-                cmp       #15
+                cmp       #lab_size
                 blt       :tx1
-                lda       #15
+                lda       #lab_size
 :tx1
                 tax
                 sep       $20
@@ -1116,9 +1116,9 @@ extop           bit       passnum
                 lda       newlable
                 and       #$ff
                 beq       :badlable
-                cmp       #15
+                cmp       #lab_size
                 blt       :tx1
-                lda       #15
+                lda       #lab_size
 :tx1
                 tax
                 sep       $20
@@ -1158,9 +1158,9 @@ geqop           bit       passnum
                 lda       newlable
                 and       #$ff
                 beq       :badlable
-                cmp       #15
+                cmp       #lab_size
                 blt       :tx1
-                lda       #15
+                lda       #lab_size
 :tx1
                 tax
                 sep       $20
@@ -1199,9 +1199,9 @@ kbdop           bit       passnum
                 lda       newlable
                 and       #$ff
                 beq       :badlable
-                cmp       #15
+                cmp       #lab_size
                 blt       :tx1
-                lda       #15
+                lda       #lab_size
 :tx1
                 tax
                 sep       $20
@@ -1553,9 +1553,9 @@ impop           sec
                 blt       :loop2
                 beq       :loop2
 :set            txa
-                cmp       #15
+                cmp       #lab_size
                 blt       :set1
-                lda       #15
+                lda       #lab_size
 :set1           sta       labstr
                 rep       $30
                 lda       reloffset
@@ -2062,9 +2062,9 @@ buildentries
 :abs            ply
                 lda       1,s
                 and       #%00011111
-                cmp       #15
+                cmp       #lab_size
                 blt       :tx1
-                lda       #15
+                lda       #lab_size
 :tx1
                 tay
                 tax
@@ -3160,7 +3160,7 @@ getexternal     php
                 jmp       ]lup
 :notfound       rep       $20
                 lda       labstr
-                and       #$0f
+                and       #label_mask
                 tay
                 ldx       #$01
 ]lup            sep       $20
@@ -3207,9 +3207,9 @@ getexternal     php
                 ldy       :offset
                 lda       [tempptr2],y
                 and       #%00011111
-                cmp       #15
+                cmp       #lab_size
                 blt       :tx1
-                lda       #15
+                lda       #lab_size
 :tx1
                 sta       :offset
                 ldx       #$00

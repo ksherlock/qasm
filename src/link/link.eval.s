@@ -1244,7 +1244,7 @@ getnum        php
 * lda evallevel           ;don't need to do this here
 * bne :lxit               ;unless level>256
               lda   #'}'
-:iny          cpx   #$0f
+:iny          cpx   #lab_size
               bge   :iny1
               sta   labstr+1,x
 :iny1         iny

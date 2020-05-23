@@ -821,13 +821,13 @@ findlable
                 stz         ]offset
                 ldy         #$00
                 lda         [lableptr],y
-                and         #$0F
+                and         #label_mask
                 sta         ]len2
                 sep         $20
                 iny
                 iny
                 ldx         #$02                      ;start at byte 2
-]lup1           cpx         #$10
+]lup1           cpx         #lab_size+1
                 bge         :movefound
                 cpx         ]len1
                 blt         :1
@@ -955,7 +955,7 @@ insertlable
                 iny
                 iny
                 ldx         #$02                      ;start at byte 2
-]lup1           cpx         #$10
+]lup1           cpx         #lab_size+1
                 jeq         :error
                 cpx         ]len1
                 blt         :1
@@ -1083,7 +1083,7 @@ insertlable
 drawlabstr      php
                 rep         $30
                 lda         labstr
-                and         #$0f
+                and         #label_mask
                 beq         :cr
                 tay
                 ldx         #$01
@@ -1175,7 +1175,7 @@ insertlableasm
                 iny
                 iny
                 ldx         #$02                      ;start at byte 2
-]lup1           cpx         #$10
+]lup1           cpx         #lab_size+1
                 jeq         :error
                 cpx         ]len1
                 blt         :1
