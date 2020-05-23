@@ -3406,7 +3406,7 @@ findlable
              sta   lableptr+2
              stz   ]offset
              lda   [lableptr]
-             and   #$0f
+             and   #label_mask
              sta   ]len2
              sep   $20
              ldx   #$02                                ;start at byte 2
@@ -3885,7 +3885,7 @@ drawlables   php
 :print       ldy   #$00
              sty   :offset
              lda   [lableptr],y
-             and   #$0F
+             and   #label_mask
              sta   :len
              sta   :bytes
              bne   :p1
@@ -3938,7 +3938,7 @@ drawlables   php
              cpx   :len
              blt   ]lup
              beq   ]lup
-             lda   #$14
+             lda   #lab_size+5
              sec
              sbc   :bytes
              tax

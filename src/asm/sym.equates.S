@@ -1,5 +1,8 @@
 				dum	0
-o_labstr          ds    16	; 0
+lab_size	  equ   31
+label_mask	  equ   31
+
+o_labstr          ds    lab_size+1 ; 0
 o_labnum          ds    2 	; 16
 o_lableft         ds    2 	; 18
 o_labright        ds    2	; 20
