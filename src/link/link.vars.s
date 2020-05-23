@@ -114,7 +114,7 @@ labprev           ds    2
 lablocal          ds    2                     ;REC of Local Lable Tree
 labtype           ds    2                     ;Type of Label
 labval            ds    4                     ;EQU value of Lable
-foundlable        ds    sym_size              ;lable REC returned from FINDLABLE
+*foundlable        ds    sym_size              ;lable REC returned from FINDLABLE
 globlab           ds    2                     ;REC of Current Global Lable
 myvalue           ds    4
 lvalue            ds    4
@@ -178,6 +178,7 @@ here              =     *
                   err   */$100
                   dend
 
+foundlable        ds    sym_size              ;lable REC returned from FINDLABLE
 
 asmpath           ds    130,0
 rezpath           ds    130,0

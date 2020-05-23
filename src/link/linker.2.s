@@ -1644,7 +1644,7 @@ incasmlablect   php
                 and         #%11111111
                 bne         :normal
                 psl         #$00
-                psl         #256*sym_size             ; #$2000
+                psl         #sym_size*256             ; #$2000
                 lda         userid
                 ora         #linkmemid+$100
                 pha
