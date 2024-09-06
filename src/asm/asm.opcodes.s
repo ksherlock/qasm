@@ -3722,14 +3722,11 @@ astop         lda       passnum
               lda       #forwardref
 :sec1         sec
               rts
-:ok           ldal      tcursx
-              and       #$ff
-              cmp       #21
-              bge       :ast
-              lda       #' '
-              jsr       drawchar
-              jmp       :ok
-:ast          lda       lvalue
+:ok           lda   tabs
+              and   #$ff
+              pha
+              _QATabToCol
+              lda       lvalue
               and       #$00FF
               tay
 :loop         lda       #'*'
