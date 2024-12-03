@@ -1439,3 +1439,44 @@ cnvttbl       adrl  0,1,2,3,4,5,6,7,8,9
               adrl  0,1000000000,2000000000,3000000000,4000000000,5000000000
               adrl  6000000000,7000000000,8000000000,900000000
 
+
+
+eval_rel
+* like eval but returns an error if this is a reference to an external label
+* assumes 16-bit m/x
+
+* lableused values:
+* $ffff - no labels encountered in eval (eg, $1234)
+* $7fff - relative value (eg, *)
+* 0-$7ffe - label # ; may be internal or external.
+
+              mx    %00
+              jsr   eval
+              bcc   :check
+              rts
+
+:check        lda   lableused
+              bmi   :ok                  ; merlin allows it...
+              cmp   #$7fff
+              beq   :ok
+              asl
+              asl
+              tay
+              lda   [lableptr1],y
+              sta   lableptr
+              iny
+              iny
+              lda   [lableptr1],y
+              sta   lableptr+2
+              ldy   #o_labtype
+              lda   [lableptr],y
+              bit   #externalbit
+              beq   :ok
+
+              sec
+              lda #badrelative           ; merlin: bad external (bra, etc) 
+              rts                        ; or or illegal forward ref (brl/per)
+
+:ok           clc
+              rts
+

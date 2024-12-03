@@ -7,7 +7,7 @@ dobranch
               ldy       passnum
               jeq       :p1
               ldx       #$00
-              jsr       eval
+              jsr       eval_rel
               bcc       :offset
               jmp       :errput2
 :offset       lda       objptr
@@ -73,7 +73,7 @@ dobranch
               ldy       passnum
               beq       :p1
               ldx       #$00
-              jsr       eval
+              jsr       eval_rel
               bcc       :offset1
               jmp       :errput3
 :offset1      lda       objptr
@@ -446,16 +446,10 @@ perop         lda       passnum
               and       #amforce24.amforce16.amforce8!$FFFF
               bne       :bad
               ldx       #$00
-              jsr       eval
+              jsr       eval_rel
               bcc       :ok
               rts
-:ok           lda       #relflag                                              ;if rel'ing you can't use an
-              bit       modeflag                                              ;absolute value
-              beq       :ok1
-              bit       lableused
-              bpl       :ok1
-                                                                              ;check for lableused
-:ok1          lda       objptr
+:ok           lda       objptr
               clc
               adc       #$03
               pha
@@ -470,13 +464,8 @@ perop         lda       passnum
               jsr       putbyte
               lda       lvalue+1
               jsr       putbyte
-              lda       #$7fff
-              sta       lableused
-              lda       lvalue
-              sta       noshift
-              jmp       relcorrect
-* clc
-* rts
+              clc
+              rts
 :bad          lda       #badaddress
               sec
               rts
