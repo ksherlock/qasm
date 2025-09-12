@@ -2423,8 +2423,8 @@ addmode      php
              beq   :a
              jmp   :index
 
-:force8      lda   #amforce8
-             tsb   myvalue
+:force8      ;lda   #amforce8
+             ;tsb   myvalue
              jmp   :index
 :force16     lda   #amforce16
              tsb   myvalue
@@ -2651,8 +2651,7 @@ generalop    php
              bit   #amforce16.amforce24
              bne   :nodp
 
-             lda   :mode
-             tax
+             ldx   :mode
              lda   addmodetbl,x
              and   #$FF
              cmp   #$FF
@@ -2666,11 +2665,7 @@ generalop    php
              iny
 
 :get         lda   (opdata),y
-             bne   :putdp
-             lda   :mode
-             and   #amforce8
              beq   :nodp
-             jmp   :bad
 
 :putdp       sta   :opcode
              stz   :evalflag+1
@@ -2712,8 +2707,7 @@ generalop    php
 :nodp        rep   $30
              lda   :mode
              and   #amforce8.amforce16!$FFFF
-             clc
-             adc   #$400
+             ora   #$0400
              tax
              lda   addmodetbl,x
              and   #$FF
