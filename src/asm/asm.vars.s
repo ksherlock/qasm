@@ -1,7 +1,5 @@
                 tr    on
 
-tcursx          equ   $57b
-
 true            equ   $FFFF
 false           equ   $0
 
