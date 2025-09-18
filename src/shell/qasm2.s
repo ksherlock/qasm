@@ -101,6 +101,39 @@ pblkz
  REP #$30
  bra pstr2
 
+
+*------------------------------------------------------
+pstrl ENT ;print a GS/OS String
+ clc
+ hex 24
+pestrl ENT ;error entry
+ sec
+
+ phb
+ phk ;need our bank
+ plb
+ phd
+ pha
+ lda myDP ;need our DP
+ tcd
+ pla
+ sax Ptr ;point to CString
+ lda [Ptr] ; length
+ tay
+
+ php ; save carry
+ clc
+ lda Ptr
+ adc #2
+ sta Ptr
+ lda Ptr+2
+ adc #0
+ sta Ptr+2
+ plp
+ bra pstr2
+
+
+
 *------------------------------------------------------
 pstr ENT ;print a PString
  clc
@@ -440,10 +473,14 @@ GrafVectors ENT
  ~QASetVector #1;#pchr
  ~QASetVector #2;#pstr ;set vectors for text output
  ~QASetVector #5;#pblk
+ ~QASetVector #20;#pstrl
  ~QASetVector #3;#pechr
  ~QASetVector #4;#pestr ;set error vectors for text output
  ~QASetVector #6;#peblk
+ ~QASetVector #21;#pestrl
+
  ~QASetVector #14;#pt2c
+
  rts
 
 *======================================================
