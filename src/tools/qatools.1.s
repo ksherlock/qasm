@@ -1607,7 +1607,7 @@ QADateTime
                 and             #%0001                      ;show time?
                 beq             :gxit
                 ~QADrawCString  #tempbuff+9                 ; yes
-:gxit           bra             :xit
+:gxit           brl             :xit
 :hex
                 ~ReadTimeHex                                ;get time in hex
                 ldx             #4
@@ -1643,7 +1643,12 @@ QADateTime
                 ldy             #2
                 lda             []date],y                   ;print year
                 xba
-                jsr             zNumDraw
+                and             #$ff
+]lup            cmp             #100
+                bcc             :y2ok
+                sbc             #100
+                bra             ]lup
+:y2ok           jsr             zNumDraw
 
                 jsl             DrawSpace
 :time
