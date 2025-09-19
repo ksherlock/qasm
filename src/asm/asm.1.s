@@ -854,7 +854,8 @@ printline    php
              _QATabToCol
 :sp2         sep   $30
              lda   [printptr]
-             and   #$7f
+             tax
+             lda   inputtbl,x
              cmp   #' '
              jlt   :xit
              beq   :opcode
