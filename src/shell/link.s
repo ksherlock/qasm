@@ -27,8 +27,6 @@
  lnk 2/obj/qasm1.l
  lnk 2/obj/qasm.l
 
- ds 1024 ;buffer space
-
  typ S16
  sav 2/QASM
 

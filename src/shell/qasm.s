@@ -1606,12 +1606,9 @@ AppendPrompt str 'Append the file...'
 
 NewName strl 'Untitled.@'
 
-*======================================================
-* The following are equates to use DS w/no code space
 
  ENT tFind,tReplace,TextName,TextPath,QuitPath,PrintBuf
 
- dum * ;we DS this in the link file
 
 QuitParms ds 8
 SDParms ds 4
@@ -1644,7 +1641,5 @@ selStart ds 4 ;text selection info
 selEnd ds 4
 
 myDP ds 2 ;page in bank 0 of my DP
-DS_Size ENT
- dend
 
  sav 2/obj/qasm.l
