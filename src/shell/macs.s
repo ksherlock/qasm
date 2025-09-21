@@ -17,6 +17,9 @@ _QARun mac
 _QAStatus mac
  utool $06
  <<<
+_QAGetWindow mac	;_QAGetWindow():windowtype
+ utool $53
+ <<<
 ~QAGetQuitFlag mac  ;_QAGetQuitFlag():quitflag
  pha
  utool $1D

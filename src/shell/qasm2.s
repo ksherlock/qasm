@@ -35,8 +35,20 @@ pt2c ENT
  phb
  phk ;need our bank
  plb
- SEP #$30
+
  sta CmdLine ;save col #
+* check which window to use, when the buffer is empty.
+ lda PrintBuf
+ and #$00ff
+ bne :ok
+ pea 0
+ _QAGetWindow
+ pla
+ and #$8000
+ sta WhichWdw
+
+:ok
+ SEP #$30
  lda #$20
  ldx PrintBuf ;get current length
 ]loop
