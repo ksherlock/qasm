@@ -588,6 +588,7 @@ LoadQAStuff ENT
 
  jsr SetCmdHdl ;read command table
  bcs :gxit
+ ~QASetShellID ID
  ~QASetCmdHdl CmdHdl;NumCmds ;let QA know abut stuff
  ~QASetParmHdl ParmHdl
  ~QASetCmdTbl CmdAdr

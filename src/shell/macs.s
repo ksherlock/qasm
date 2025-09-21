@@ -6,6 +6,8 @@ utool mac
  jsl $E10000
  fin
  <<<
+~QASetShellID MAC 
+ psw ]1 
 _QASetShellID mac
  utool $56
  <<<
