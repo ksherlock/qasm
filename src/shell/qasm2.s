@@ -251,12 +251,13 @@ AddText
 :1
  lax ErrTEHdl ; Error window
 :2
- sax QuitPath ;save TE record
- ~TEInsert #0;#PrintBuf;PrintBuf;#0;#0;QuitPath ; & insert in wdw
+ sax :teHandle ;save TE record
+ ~TEInsert #0;#PrintBuf;PrintBuf;#0;#0;:teHandle ; & insert in wdw
  stz PrintBuf
 :xit
  plp
  rts
+:teHandle ds 4
 
 WhichWdw dw 0 ;assume command
 
